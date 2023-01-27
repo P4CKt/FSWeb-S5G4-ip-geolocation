@@ -1,4 +1,4 @@
-//axios import buraya gelecek
+import axios from 'axios';
 
 var benimIP;
 
@@ -55,7 +55,7 @@ async function ipAdresimiAl(){
 */
 
 /*
-	ADIM 4: API'den alınan verileri kullanarak ADIM 3'te verilen yapıda bir kart oluşturun ve 
+	ADIM 4: API'den alınan verileri	 kullanarak ADIM 3'te verilen yapıda bir kart oluşturun ve 
 	bu kartı DOM olarak .cards elementinin içine ekleyin. 
 */
 
@@ -70,3 +70,63 @@ async function ipAdresimiAl(){
 
 
 //kodlar buraya gelecek
+
+function idCard(dividiv){
+
+	const mDiv =document.createElement("div");
+	const imgFlag =document.createElement("img");
+	const cardDiv =document.createElement("div");
+	const infoIp =document.createElement("h3");
+	const landNum =document.createElement("p");
+	const locInfo =document.createElement("p");
+	const cityName =document.createElement("p");
+	const timeZone =document.createElement("p");
+	const currencyUnit =document.createElement("p");
+	const nIsp =document.createElement("p");
+	
+	// class
+	mDiv.setAttribute("class","card");
+	cardDiv.setAttribute("class","card-info");
+	infoIp.setAttribute("class","ip");
+	landNum.setAttribute("class","ulke");
+	
+	
+	//content
+	imgFlag.src=dividiv["ülkebayrağı"];
+	infoIp.textContent=dividiv["ip"];
+	landNum.textContent=dividiv["landInfo"],["landCode"];
+	locInfo.textContent=`Enlem: ${dividiv["enlem"]} Boylam: ${dividiv["boylam"]}`;
+	cityName.textContent=`Şehir: ${dividiv["şehir"]}`;
+	timeZone.textContent=`Saat dilimi: ${dividiv["saatdilimi"]}`;
+	currencyUnit.textContent=`Para birimi: ${dividiv["parabirimi"]}`;
+	nIsp.textContent=`ISP: ${dividiv["isp"]}`;
+	
+	mDiv.appendChild(imgFlag);
+	mDiv.appendChild(cardDiv);
+	cardDiv.appendChild(infoIp);
+	cardDiv.appendChild(landNum);
+	cardDiv.appendChild(locInfo);
+	cardDiv.appendChild(cityName);
+	cardDiv.appendChild(timeZone);
+	cardDiv.appendChild(currencyUnit);
+	cardDiv.appendChild(nIsp);
+	
+	
+	return mDiv;
+	
+
+	}
+	
+	const cardSpawn =document.querySelector("div.cards");
+
+	const start = async function() {await ipAdresimiAl();
+	console.log("Anda mıyız");
+	axios.
+	get("https://apis.ergineer.com/ipgeoapi/"+benimIP)
+	.then((response)=>{cardSpawn.appendChild(idCard(response.data));
+	console.log("Sorun Yok");
+	})
+	.catch((Error)=>{console.log(Error);console.log("Yazıklar Olsun")});
+
+};
+start()
